@@ -1,14 +1,20 @@
 const Track: React.FC = () => {
   return (
     <div className='track'>
-      <div className='track__panel'>
+      <div className='track__controlPanel'>
         <button>Перевірити ТТН</button>
         <button>Список відділень</button>
       </div>
 
       <div className='track__form'>
-          <input type="text" />
-          <button>Get status TTN</button>
+        <input
+          className='track__formInput'
+          type="number"
+          placeholder="Номер посилки"
+        />
+        <button className='track__formButton'>
+          Get status TTN
+        </button>
       </div>
 
       <div>
