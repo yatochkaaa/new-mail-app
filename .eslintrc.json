@@ -7,8 +7,7 @@
     "plugin:react/recommended",
     "standard-with-typescript",
     "plugin:react-hooks/recommended",
-    "react-app",
-    "prettier"
+    "react-app"
   ],
   "overrides": [],
   "parserOptions": {
