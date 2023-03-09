@@ -17,13 +17,15 @@ const Track: React.FC = () => {
         </button>
       </div>
 
-      <div>
+      <div className="track__data">
         <div className='track__status'>
-          Статус доставки
+          <p>Статус доставки:</p>
+          <p><strong>Відправлено:</strong></p>
+          <p><strong>Отримано:</strong></p>
         </div>
 
         <div className='track__history'>
-          Історія
+          <p><strong>Історія:</strong></p>
         </div>
       </div>
     </div>

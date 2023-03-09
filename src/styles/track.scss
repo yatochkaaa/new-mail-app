@@ -9,9 +9,11 @@
 
   &__controlPanel {
     margin-bottom: 36px;
+    max-width: $main-content-width;
+    display: flex;
 
     & button {
-      width: 280px;
+      width: 100%;
       height: 72px;
       font-size: 24px;
 
@@ -22,6 +24,7 @@
   }
 
   &__form {
+    max-width: $main-content-width;
     display: flex;
     align-items: center;
     margin-bottom: 36px;
@@ -39,10 +42,26 @@
   }
 
   &__formButton {
-    box-sizing: border-box;
     font-size: 18px;
     height: 50px;
     width: 212px;
     border: border;
+  }
+
+  &__data {
+    display: flex;
+  }
+
+  &__status {
+    width: $main-content-width;
+    padding: 8px;
+    border: $border;
+    margin-right: 36px;
+  }
+
+  &__history {
+    width: 400px;
+    padding: 8px;
+    border: $border;
   }
 }
