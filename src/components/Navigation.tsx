@@ -1,13 +1,27 @@
-const Navigation: React.FC = () => {
+import { NavigationItem } from '../types/navigation'
+
+interface Props {
+  setNavigation: React.Dispatch<React.SetStateAction<NavigationItem>>
+}
+
+const Navigation: React.FC<Props> = ({
+  setNavigation
+}: Props) => {
+  console.log()
   return (
-    <div className='navigation'>
-        <button className="navigation__item">
-          Перевірити ТТН
-        </button>
-        <button className="navigation__item">
-          Список відділень
-        </button>
-    </div>
+    <nav className='navigation'>
+      {Object.values(NavigationItem).map(navItem => {
+        return (
+          <button
+            key={navItem}
+            className="navigation__item"
+            onClick={() => { setNavigation(navItem) }}
+          >
+            {navItem}
+          </button>
+        )
+      })}
+    </nav>
   )
 }
 

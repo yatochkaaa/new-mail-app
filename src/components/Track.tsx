@@ -25,6 +25,7 @@ const Track: React.FC = () => {
     setStatus(statusData.Status)
     setHistory([...history, TTN])
     console.log(statusData)
+    // 20400317061470
   }
 
   return (
