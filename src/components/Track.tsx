@@ -23,17 +23,10 @@ const Track: React.FC = () => {
     setWarehouseRecipient(statusData.WarehouseRecipient)
     setStatus(statusData.Status)
     setHistory([...history, TTN])
-
-    console.log('statusdata', statusData)
   }
 
   return (
     <div className='track'>
-      <div className='track__controlPanel'>
-        <button>Перевірити ТТН</button>
-        <button>Список відділень</button>
-      </div>
-
       <div className='track__form'>
         <input
           className='track__formInput'
