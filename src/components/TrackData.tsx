@@ -2,12 +2,14 @@ interface Props {
   warehouseSender: string
   warehouseRecipient: string
   status: string
+  history: string[]
 }
 
 const TrackData: React.FC<Props> = ({
   warehouseSender,
   warehouseRecipient,
-  status
+  status,
+  history
 }: Props) => {
   return (
     <div className="track__data">
@@ -26,7 +28,10 @@ const TrackData: React.FC<Props> = ({
         </div>
 
         <div className='track__history'>
-          <p><strong>Історія:</strong></p>
+          <ul>
+            <strong>Історія:</strong>
+            {history.map((TTN, i) => <li key={i}>{TTN}</li>)}
+          </ul>
         </div>
     </div>
   )

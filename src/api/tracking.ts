@@ -1,9 +1,8 @@
 import axios from 'axios'
 
-const url = 'https://api.novaposhta.ua/v2.0/json/'
-const apiKey = JSON.stringify(process.env.REACT_APP_POST_KEY)
-
 export const getTrackingRequest = async (documentNumber: string) => {
+  const url = 'https://api.novaposhta.ua/v2.0/json/'
+  const apiKey = '88c364870f288e06e0a5505bbd3ddd55'
   const config = {
     apiKey,
     modelName: 'TrackingDocument',

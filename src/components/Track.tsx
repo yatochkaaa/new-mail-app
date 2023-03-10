@@ -7,6 +7,7 @@ const Track: React.FC = () => {
   const [warehouseSender, setWarehouseSender] = React.useState<string>('')
   const [warehouseRecipient, setWarehouseRecipient] = React.useState<string>('')
   const [status, setStatus] = React.useState<string>('')
+  const [history, setHistory] = React.useState<string[]>([])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -21,6 +22,7 @@ const Track: React.FC = () => {
     setWarehouseSender(statusData.WarehouseSender)
     setWarehouseRecipient(statusData.WarehouseRecipient)
     setStatus(statusData.Status)
+    setHistory([...history, TTN])
 
     console.log('statusdata', statusData)
   }
@@ -52,6 +54,7 @@ const Track: React.FC = () => {
         warehouseSender={warehouseSender}
         warehouseRecipient={warehouseRecipient}
         status={status}
+        history={history}
       />
     </div>
   )
