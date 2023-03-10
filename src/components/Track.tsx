@@ -1,6 +1,7 @@
 import React from 'react'
 import getTrackingRequest from '../api/tracking'
 import TrackData from './TrackData'
+import TrackForm from './TrackForm'
 
 const Track: React.FC = () => {
   const [TTN, setTTN] = React.useState<string>('')
@@ -23,25 +24,16 @@ const Track: React.FC = () => {
     setWarehouseRecipient(statusData.WarehouseRecipient)
     setStatus(statusData.Status)
     setHistory([...history, TTN])
+    console.log(statusData)
   }
 
   return (
     <div className='track'>
-      <div className='track__form'>
-        <input
-          className='track__formInput'
-          type="number"
-          placeholder="Номер посилки"
-          value={TTN}
-          onChange={handleInputChange}
-        />
-        <button
-          className='track__formButton'
-          onClick={() => { getStatus(TTN) }}
-        >
-          Get status TTN
-        </button>
-      </div>
+      <TrackForm
+        TTN={TTN}
+        handleInputChange={handleInputChange}
+        getStatus={getStatus}
+      />
 
       <TrackData
         warehouseSender={warehouseSender}
