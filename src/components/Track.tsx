@@ -1,7 +1,22 @@
+import React from 'react'
 import getTrackingRequest from '../api/tracking'
 
 const Track: React.FC = () => {
-  console.log(getTrackingRequest('20400317061470'))
+  const [TTN, setTTN] = React.useState<string>('')
+  const [warehouseSenderAddress, setWarehouseSenderAddress] = React.useState<string>('')
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+
+    setTTN(value)
+  }
+
+  const getStatus = async (TTN: string) => {
+    const status = await getTrackingRequest(TTN)
+
+    setWarehouseSenderAddress(status.data[0])
+    console.log(warehouseSenderAddress)
+  }
 
   return (
     <div className='track'>
@@ -15,8 +30,13 @@ const Track: React.FC = () => {
           className='track__formInput'
           type="number"
           placeholder="Номер посилки"
+          value={TTN}
+          onChange={handleInputChange}
         />
-        <button className='track__formButton'>
+        <button
+          className='track__formButton'
+          onClick={() => { getStatus(TTN) }}
+        >
           Get status TTN
         </button>
       </div>
