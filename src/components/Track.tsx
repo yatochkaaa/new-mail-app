@@ -1,4 +1,8 @@
+import getTrackingRequest from '../api/tracking'
+
 const Track: React.FC = () => {
+  console.log(getTrackingRequest('20400317061470'))
+
   return (
     <div className='track'>
       <div className='track__controlPanel'>
