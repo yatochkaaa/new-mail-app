@@ -1,9 +1,12 @@
 import React from 'react'
 import getTrackingRequest from '../api/tracking'
+import TrackData from './TrackData'
 
 const Track: React.FC = () => {
   const [TTN, setTTN] = React.useState<string>('')
-  const [warehouseSenderAddress, setWarehouseSenderAddress] = React.useState<string>('')
+  const [warehouseSender, setWarehouseSender] = React.useState<string>('')
+  const [warehouseRecipient, setWarehouseRecipient] = React.useState<string>('')
+  const [status, setStatus] = React.useState<string>('')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -13,9 +16,13 @@ const Track: React.FC = () => {
 
   const getStatus = async (TTN: string) => {
     const status = await getTrackingRequest(TTN)
+    const statusData = status.data[0]
 
-    setWarehouseSenderAddress(status.data[0])
-    console.log(warehouseSenderAddress)
+    setWarehouseSender(statusData.WarehouseSender)
+    setWarehouseRecipient(statusData.WarehouseRecipient)
+    setStatus(statusData.Status)
+
+    console.log('statusdata', statusData)
   }
 
   return (
@@ -41,17 +48,11 @@ const Track: React.FC = () => {
         </button>
       </div>
 
-      <div className="track__data">
-        <div className='track__status'>
-          <p>Статус доставки:</p>
-          <p><strong>Відправлено:</strong></p>
-          <p><strong>Отримано:</strong></p>
-        </div>
-
-        <div className='track__history'>
-          <p><strong>Історія:</strong></p>
-        </div>
-      </div>
+      <TrackData
+        warehouseSender={warehouseSender}
+        warehouseRecipient={warehouseRecipient}
+        status={status}
+      />
     </div>
   )
 }
