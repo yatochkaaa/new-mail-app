@@ -1,7 +1,31 @@
+import React from 'react'
 import getTrackingRequest from '../api/tracking'
+import TrackData from './TrackData'
 
 const Track: React.FC = () => {
-  console.log(getTrackingRequest('20400317061470'))
+  const [TTN, setTTN] = React.useState<string>('')
+  const [warehouseSender, setWarehouseSender] = React.useState<string>('')
+  const [warehouseRecipient, setWarehouseRecipient] = React.useState<string>('')
+  const [status, setStatus] = React.useState<string>('')
+  const [history, setHistory] = React.useState<string[]>([])
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+
+    setTTN(value)
+  }
+
+  const getStatus = async (TTN: string) => {
+    const status = await getTrackingRequest(TTN)
+    const statusData = status.data[0]
+
+    setWarehouseSender(statusData.WarehouseSender)
+    setWarehouseRecipient(statusData.WarehouseRecipient)
+    setStatus(statusData.Status)
+    setHistory([...history, TTN])
+
+    console.log('statusdata', statusData)
+  }
 
   return (
     <div className='track'>
@@ -15,23 +39,23 @@ const Track: React.FC = () => {
           className='track__formInput'
           type="number"
           placeholder="Номер посилки"
+          value={TTN}
+          onChange={handleInputChange}
         />
-        <button className='track__formButton'>
+        <button
+          className='track__formButton'
+          onClick={() => { getStatus(TTN) }}
+        >
           Get status TTN
         </button>
       </div>
 
-      <div className="track__data">
-        <div className='track__status'>
-          <p>Статус доставки:</p>
-          <p><strong>Відправлено:</strong></p>
-          <p><strong>Отримано:</strong></p>
-        </div>
-
-        <div className='track__history'>
-          <p><strong>Історія:</strong></p>
-        </div>
-      </div>
+      <TrackData
+        warehouseSender={warehouseSender}
+        warehouseRecipient={warehouseRecipient}
+        status={status}
+        history={history}
+      />
     </div>
   )
 }
