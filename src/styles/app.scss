@@ -1,10 +1,23 @@
 .app {
-  margin: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px 40px 0;
   font-size: 16px;
   font-weight: 400;
   color: $font-color;
 
   @include onPhone {
     margin: 12px;
+  }
+
+  &__wrapper {
+    @include onMediumDesktop {
+      width: $main-content-width;
+    }
+
+    @include onTablet {
+      width: auto;
+    }
   }
 }
