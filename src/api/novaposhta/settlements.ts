@@ -8,7 +8,7 @@ export const searchSettlementsRequest = async (cityName: string) => {
     calledMethod: 'searchSettlements',
     methodProperties: {
       CityName: cityName,
-      Limit: '10',
+      Limit: '5',
       Page: '1'
     }
 

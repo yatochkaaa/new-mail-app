@@ -1,8 +1,11 @@
 $font-color: #33332f;
+$list-color: #515151;
 $button-color: #999997;
 $button-background: #fbfbfb;
+$background-hover: #fafafa;
 $border-color: #ebebea;
 $border: 1px solid $border-color;
+$transition: all 300ms linear;
 
 $main-content-width: 600px;
 $sidebar-width: $main-content-width / 3;

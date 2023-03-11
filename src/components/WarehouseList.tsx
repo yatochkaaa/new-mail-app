@@ -1,22 +1,22 @@
 import React from 'react'
 import { searchSettlementsRequest } from '../api/novaposhta/settlements'
+import { type Address } from '../types/novapochta'
 // import { getWarehousesRequest } from '../api/novaposhta/warehouses'
 
 const WarehouseList: React.FC = () => {
-  const [settlements, setSettlements] = React.useState([])
+  const [settlements, setSettlements] = React.useState<Address[]>([])
   const [inputSettlement, setInputSettlement] = React.useState('')
 
   React.useEffect(() => {
     getSettlements(inputSettlement)
-    console.log(settlements)
   }, [inputSettlement])
 
   const getSettlements = async (cityName: string) => {
     const settlements = await searchSettlementsRequest(cityName)
-    const adresses = settlements.data[0].Adresses
+    const addresses = settlements.data[0].Addresses
 
-    setSettlements(adresses)
-    console.log('settlements', adresses)
+    setSettlements(addresses)
+    console.log('settlements', addresses)
   }
 
   // const getWarehouses = async () => {
@@ -33,12 +33,26 @@ const WarehouseList: React.FC = () => {
 
   return (
     <div className="warehouseList">
-      <input
-        type="text"
-        value={inputSettlement}
-        onChange={handleInputSettlementChange}
-      />
-
+      <div className='warehouseList__form'>
+        <input
+          className='warehouseList__settlement'
+          type="text"
+          value={inputSettlement}
+          onChange={handleInputSettlementChange}
+        />
+        {settlements && (
+        <ul className='warehouseList__addresses'>
+          {settlements.map(settlement => (
+            <li
+              key={settlement.Ref}
+              className='warehouseList__address'
+            >
+              {settlement.Present}
+            </li>
+          ))}
+        </ul>
+        )}
+      </div>
       <ul>
 
       </ul>
