@@ -4,6 +4,10 @@
     display: flex;
     align-items: center;
     margin-bottom: 36px;
+
+    @include onPhone {
+      margin-bottom: $phone-space;
+    }
   }
 
   &__formInput {
@@ -34,26 +38,45 @@
 
   &__status {
     width: $main-content-width;
-    padding: 8px;
+    padding: $phone-space;
     border: $border;
     margin-right: 24px;
+    height: fit-content;
 
     @include onMediumDesktop {
       margin-right: 0;
-      margin-bottom: 12px;
+      margin-bottom: $desktop-space;
       max-width: $main-content-width;
       width:auto;
     }
+
+    @include onPhone {
+      margin-bottom: $phone-space;
+    }
+  }
+
+  & p:not(:last-child) {
+    margin-bottom: 8px;
   }
 
   &__history {
-    width: 350px;
-    padding: 8px;
+    width: $sidebar-width;
+    padding: $phone-space;
     border: $border;
 
     @include onMediumDesktop {
       max-width: $main-content-width;
       width: auto;
     }
+
+    & li:not(:last-child) {
+      margin-bottom: 4px;
+    }
+  }
+
+  &__historyTitle {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
   }
 }

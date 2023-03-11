@@ -28,8 +28,8 @@ const TrackData: React.FC<Props> = ({
         </div>
 
         <div className='track__history'>
+          <span className="track__historyTitle">Історія:</span>
           <ul>
-            <strong>Історія:</strong>
             {history.map((TTN, i) => <li key={i}>{TTN}</li>)}
           </ul>
         </div>

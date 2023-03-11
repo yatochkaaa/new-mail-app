@@ -8,7 +8,7 @@
   color: $font-color;
 
   @include onPhone {
-    margin: 12px;
+    margin: $phone-space;
   }
 
   &__wrapper {

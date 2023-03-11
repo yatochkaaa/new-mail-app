@@ -1,7 +1,11 @@
 .navigation {
-  margin-bottom: 36px;
+  margin-bottom: $desktop-space;
   max-width: $main-content-width;
   display: flex;
+
+  @include onPhone {
+    margin-bottom: $phone-space;
+  }
 
   &__item {
     width: 100%;
@@ -13,7 +17,7 @@
       margin-right: 24px;
 
       @include onPhone {
-        margin-right: 12px;
+        margin-right: $phone-space;
       }
     }
   }
