@@ -1,6 +1,7 @@
-@import './variables';
-@import './extends';
-@import './mixins';
+@import './utils/variables';
+@import './utils/extends';
+@import './utils/mixins';
+@import './utils/fonts';
 @import './normilize.scss';
 @import './app.scss';
 @import './navigation.scss';
