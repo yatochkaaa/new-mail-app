@@ -1,11 +1,12 @@
 import React from 'react'
 import { getAreasRequest } from '../api/novaposhta/areas'
-import { getCitiesRequest } from '../api/novaposhta/cities'
-import { getWarehousesRequest } from '../api/novaposhta/warehouses'
+// import { getCitiesRequest } from '../api/novaposhta/cities'
+// import { getWarehousesRequest } from '../api/novaposhta/warehouses'
 import { type Area } from '../types/novaposhta'
 
 const WarehouseList: React.FC = () => {
   const [areas, setAreas] = React.useState<Area[]>([])
+  const [selectArea, setSelectArea] = React.useState<string>('')
 
   React.useEffect(() => {
     getAreas()
@@ -16,27 +17,36 @@ const WarehouseList: React.FC = () => {
     const areasData = areas.data
 
     setAreas(areasData)
+    setSelectArea(areasData[0].Description)
   }
 
-  const getCities = async () => {
-    const cities = await getCitiesRequest()
+  // const getCities = async () => {
+  //   const cities = await getCitiesRequest()
 
-    console.log('cities', cities)
+  //   console.log('cities', cities)
+  // }
+
+  // const getWarehouses = async () => {
+  //   const warehouses = await getWarehousesRequest()
+
+  //   console.log('warehouses', warehouses)
+  // }
+
+  const handleSelectAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target
+
+    setSelectArea(value)
+
+    console.log(selectArea)
   }
-
-  const getWarehouse = async () => {
-    const warehouses = await getWarehousesRequest()
-
-    console.log('warehouses', warehouses)
-  }
-
-  // getAreas()
-  // getCities()
-  // getWarehouse()
 
   return (
     <div className="warehouseList">
-      <select className='warehouseList__select'>
+      <select
+        className='warehouseList__select'
+        value={selectArea}
+        onChange={handleSelectAreaChange}
+      >
         {areas.map((area: Area, i) => {
           return (
             <option key={area.Description}>
