@@ -1,3 +1,7 @@
 .warehouseList {
   border: $border;
+
+  &__select {
+    width: 100px;
+  }
 }

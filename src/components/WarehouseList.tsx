@@ -1,12 +1,21 @@
+import React from 'react'
 import { getAreasRequest } from '../api/novaposhta/areas'
 import { getCitiesRequest } from '../api/novaposhta/cities'
 import { getWarehousesRequest } from '../api/novaposhta/warehouses'
+import { type Area } from '../types/novaposhta'
 
 const WarehouseList: React.FC = () => {
+  const [areas, setAreas] = React.useState<Area[]>([])
+
+  React.useEffect(() => {
+    getAreas()
+  }, [])
+
   const getAreas = async () => {
     const areas = await getAreasRequest()
+    const areasData = areas.data
 
-    console.log('areas', areas)
+    setAreas(areasData)
   }
 
   const getCities = async () => {
@@ -21,13 +30,22 @@ const WarehouseList: React.FC = () => {
     console.log('warehouses', warehouses)
   }
 
-  getAreas()
-  getCities()
-  getWarehouse()
+  // getAreas()
+  // getCities()
+  // getWarehouse()
 
   return (
-      <ul className="warehouseList">
-      </ul>
+    <div className="warehouseList">
+      <select className='warehouseList__select'>
+        {areas.map((area: Area, i) => {
+          return (
+            <option key={area.Description}>
+              {area.Description}
+            </option>
+          )
+        })}
+      </select>
+    </div>
   )
 }
 
