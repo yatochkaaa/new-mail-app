@@ -34,23 +34,24 @@ const WarehouseList: React.FC = () => {
   return (
     <div className="warehouseList">
       <div className='warehouseList__form'>
+        <div className='warehouseList__pointer'></div>
         <input
           className='warehouseList__settlement'
           type="text"
           value={inputSettlement}
           onChange={handleInputSettlementChange}
         />
-        {settlements && (
-        <ul className='warehouseList__addresses'>
-          {settlements.map(settlement => (
-            <li
-              key={settlement.Ref}
-              className='warehouseList__address'
-            >
-              {settlement.Present}
-            </li>
-          ))}
-        </ul>
+        {settlements.length > 0 && (
+          <ul className='warehouseList__addresses'>
+            {settlements.map(settlement => (
+              <li
+                key={settlement.Ref}
+                className='warehouseList__address'
+              >
+                {settlement.Present}
+              </li>
+            ))}
+          </ul>
         )}
       </div>
       <ul>
