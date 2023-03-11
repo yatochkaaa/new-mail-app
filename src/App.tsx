@@ -10,16 +10,14 @@ const App: React.FC = () => {
 
   return (
     <div className='app'>
-      <div className='app__wrapper'>
-        <Navigation
-          setNavigation={setNavigation}
-        />
+      <Navigation
+        setNavigation={setNavigation}
+      />
 
-        {navigation === NavigationItem.checkTTN
-          ? <Track />
-          : <WarehouseList />
-        }
-      </div>
+      {navigation === NavigationItem.checkTTN
+        ? <Track />
+        : <WarehouseList />
+      }
     </div>
   )
 }

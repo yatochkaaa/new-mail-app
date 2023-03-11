@@ -9,6 +9,7 @@ const Track: React.FC = () => {
   const [warehouseRecipient, setWarehouseRecipient] = React.useState<string>('')
   const [status, setStatus] = React.useState<string>('')
   const [history, setHistory] = React.useState<string[]>([])
+  const [isStatusData, setIsStatusData] = React.useState<boolean>(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -20,11 +21,13 @@ const Track: React.FC = () => {
     const status = await getTrackingRequest(TTN)
     const statusData = status.data[0]
 
-    setWarehouseSender(statusData.WarehouseSender)
-    setWarehouseRecipient(statusData.WarehouseRecipient)
-    setStatus(statusData.Status)
-    setHistory([...history, TTN])
-    console.log(statusData)
+    if (status.success) {
+      setWarehouseSender(statusData.WarehouseSender)
+      setWarehouseRecipient(statusData.WarehouseRecipient)
+      setStatus(statusData.Status)
+      setHistory([...history, TTN])
+      setIsStatusData(status.success)
+    }
     // 20400317061470
   }
 
@@ -36,12 +39,14 @@ const Track: React.FC = () => {
         getStatus={getStatus}
       />
 
-      <TrackData
-        warehouseSender={warehouseSender}
-        warehouseRecipient={warehouseRecipient}
-        status={status}
-        history={history}
-      />
+      {isStatusData && (
+        <TrackData
+          warehouseSender={warehouseSender}
+          warehouseRecipient={warehouseRecipient}
+          status={status}
+          history={history}
+        />
+      )}
     </div>
   )
 }
