@@ -1,12 +1,17 @@
 import axios from 'axios'
 import { apiKey, url } from '.'
 
-export const getCitiesRequest = async () => {
+export const searchSettlementsRequest = async (cityName: string) => {
   const config = {
     apiKey,
     modelName: 'Address',
-    calledMethod: 'getCities',
-    methodProperties: {}
+    calledMethod: 'searchSettlements',
+    methodProperties: {
+      CityName: cityName,
+      Limit: '10',
+      Page: '1'
+    }
+
   }
 
   const response = await axios.post(url, config)
