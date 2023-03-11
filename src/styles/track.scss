@@ -1,33 +1,18 @@
 .track {
-  button {
-    background-color: $button-background;
-    color: $button-color;
-    border-radius: 2px;
-    border: $border;
-    font-weight: bold;
-  }
-
-  &__controlPanel {
-    margin-bottom: 36px;
-    max-width: $main-content-width;
-    display: flex;
-
-    & button {
-      width: 100%;
-      height: 72px;
-      font-size: 24px;
-
-      &:not(:last-child) {
-        margin-right: 36px;
-      }
-    }
-  }
-
   &__form {
-    max-width: $main-content-width;
+    width: $main-content-width;
     display: flex;
     align-items: center;
-    margin-bottom: 36px;
+    margin-bottom: $desktop-space;
+
+    @include onTablet {
+      width: 100%;
+      margin-bottom: $tablet-space;
+    }
+
+    @include onPhone {
+      margin-bottom: $phone-space;
+    }
   }
 
   &__formInput {
@@ -43,25 +28,75 @@
 
   &__formButton {
     font-size: 18px;
-    height: 50px;
+    height: 48px;
     width: 212px;
-    border: border;
+    @extend %buttonStyles;
   }
 
   &__data {
     display: flex;
+
+    @include onMediumDesktop {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: $desktop-space;
+    }
+
+    @include onTablet {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
   }
 
   &__status {
     width: $main-content-width;
-    padding: 8px;
+    padding: $phone-space;
     border: $border;
-    margin-right: 36px;
+    margin-right: $desktop-space;
+    height: fit-content;
+    min-width: $main-content-width;
+
+    @include onMediumDesktop {
+      max-width: $main-content-width;
+      min-width: inherit;
+      width: fit-content;
+      margin-right: 0;
+      margin-bottom: $desktop-space;
+    }
+
+    @include onTablet {
+      max-width: none;
+      width: 100%;
+      margin-bottom: $tablet-space;
+    }
+
+    @include onPhone {
+      margin-bottom: $phone-space;
+    }
+  }
+
+  & p:not(:last-child) {
+    margin-bottom: 8px;
   }
 
   &__history {
-    width: 400px;
-    padding: 8px;
+    width: $sidebar-width;
+    padding: $phone-space;
     border: $border;
+
+    @include onMediumDesktop {
+      width: 100%;
+    }
+
+    & li:not(:last-child) {
+      margin-bottom: 4px;
+    }
+  }
+
+  &__historyTitle {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import getTrackingRequest from '../api/tracking'
 import TrackData from './TrackData'
+import TrackForm from './TrackForm'
 
 const Track: React.FC = () => {
   const [TTN, setTTN] = React.useState<string>('')
@@ -8,6 +9,7 @@ const Track: React.FC = () => {
   const [warehouseRecipient, setWarehouseRecipient] = React.useState<string>('')
   const [status, setStatus] = React.useState<string>('')
   const [history, setHistory] = React.useState<string[]>([])
+  const [isStatusData, setIsStatusData] = React.useState<boolean>(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -19,43 +21,32 @@ const Track: React.FC = () => {
     const status = await getTrackingRequest(TTN)
     const statusData = status.data[0]
 
-    setWarehouseSender(statusData.WarehouseSender)
-    setWarehouseRecipient(statusData.WarehouseRecipient)
-    setStatus(statusData.Status)
-    setHistory([...history, TTN])
-
-    console.log('statusdata', statusData)
+    if (status.success) {
+      setWarehouseSender(statusData.WarehouseSender)
+      setWarehouseRecipient(statusData.WarehouseRecipient)
+      setStatus(statusData.Status)
+      setHistory([...history, TTN])
+      setIsStatusData(status.success)
+    }
+    // 20400317061470
   }
 
   return (
     <div className='track'>
-      <div className='track__controlPanel'>
-        <button>Перевірити ТТН</button>
-        <button>Список відділень</button>
-      </div>
-
-      <div className='track__form'>
-        <input
-          className='track__formInput'
-          type="number"
-          placeholder="Номер посилки"
-          value={TTN}
-          onChange={handleInputChange}
-        />
-        <button
-          className='track__formButton'
-          onClick={() => { getStatus(TTN) }}
-        >
-          Get status TTN
-        </button>
-      </div>
-
-      <TrackData
-        warehouseSender={warehouseSender}
-        warehouseRecipient={warehouseRecipient}
-        status={status}
-        history={history}
+      <TrackForm
+        TTN={TTN}
+        handleInputChange={handleInputChange}
+        getStatus={getStatus}
       />
+
+      {isStatusData && (
+        <TrackData
+          warehouseSender={warehouseSender}
+          warehouseRecipient={warehouseRecipient}
+          status={status}
+          history={history}
+        />
+      )}
     </div>
   )
 }

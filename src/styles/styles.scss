@@ -1,4 +1,9 @@
-@import './variables';
+@import './utils/variables';
+@import './utils/extends';
+@import './utils/mixins';
+@import './utils/fonts';
 @import './normilize.scss';
 @import './app.scss';
+@import './navigation.scss';
 @import './track.scss';
+@import './warehouseList.scss';
