@@ -1,7 +1,16 @@
+import { getWarehousesRequest } from '../api/novaposhta/warehouses'
+
 const WarehouseList: React.FC = () => {
+  const getWarehouse = async () => {
+    const warehouses = await getWarehousesRequest()
+
+    console.log('warehouses', warehouses)
+  }
+
+  getWarehouse()
+
   return (
       <ul className="warehouseList">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur fugit, saepe ex dolorum ratione, iste perspiciatis, dignissimos dolor quidem dolorem id eligendi. Dolores sint illum, laborum deserunt itaque accusantium placeat.
       </ul>
   )
 }

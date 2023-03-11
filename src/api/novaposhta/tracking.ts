@@ -1,8 +1,7 @@
 import axios from 'axios'
+import { apiKey, url } from '.'
 
 export const getTrackingRequest = async (documentNumber: string) => {
-  const url = 'https://api.novaposhta.ua/v2.0/json/'
-  const apiKey = '88c364870f288e06e0a5505bbd3ddd55'
   const config = {
     apiKey,
     modelName: 'TrackingDocument',
@@ -22,5 +21,3 @@ export const getTrackingRequest = async (documentNumber: string) => {
     throw new Error(`${response.status} - ${response.statusText}`)
   }
 }
-
-export default getTrackingRequest
