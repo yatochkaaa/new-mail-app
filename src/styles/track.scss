@@ -26,18 +26,34 @@
 
   &__data {
     display: flex;
+
+    @include onMediumDesktop {
+      flex-direction: column;
+    }
   }
 
   &__status {
     width: $main-content-width;
     padding: 8px;
     border: $border;
-    margin-right: 36px;
+    margin-right: 24px;
+
+    @include onMediumDesktop {
+      margin-right: 0;
+      margin-bottom: 12px;
+      max-width: $main-content-width;
+      width: auto;
+    }
   }
 
   &__history {
-    width: 400px;
+    width: 350px;
     padding: 8px;
     border: $border;
+
+    @include onMediumDesktop {
+      max-width: $main-content-width;
+      width: auto;
+    }
   }
 }

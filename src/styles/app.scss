@@ -1,6 +1,10 @@
 .app {
-  margin: 80px 200px 0;
+  margin: 24px;
   font-size: 16px;
   font-weight: 400;
   color: $font-color;
+
+  @include onPhone {
+    margin: 12px;
+  }
 }

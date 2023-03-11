@@ -1,9 +1,9 @@
 import React from 'react'
 import Navigation from './components/Navigation'
 import Track from './components/Track'
+import WarehouseList from './components/WarehouseList'
 import { NavigationItem } from './types/navigation'
 import './styles/styles.scss'
-import WarehouseList from './components/WarehouseList'
 
 const App: React.FC = () => {
   const [navigation, setNavigation] = React.useState<NavigationItem>(NavigationItem.checkTTN)

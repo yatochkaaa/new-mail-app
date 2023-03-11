@@ -7,7 +7,6 @@ interface Props {
 const Navigation: React.FC<Props> = ({
   setNavigation
 }: Props) => {
-  console.log()
   return (
     <nav className='navigation'>
       {Object.values(NavigationItem).map(navItem => {
