@@ -14,8 +14,11 @@ const WarehouseList: React.FC = () => {
   const getSettlements = async (cityName: string) => {
     const settlements = await searchSettlementsRequest(cityName)
     const addresses = settlements.data[0].Addresses
+    const firstAdress = addresses[0].MainDescription
 
-    setSettlements(addresses)
+    if (firstAdress !== inputSettlement) {
+      setSettlements(addresses)
+    }
     console.log('settlements', addresses)
   }
 
@@ -29,6 +32,12 @@ const WarehouseList: React.FC = () => {
     const { value } = e.target
 
     setInputSettlement(value)
+  }
+
+  const handleAddressClickChange = (settlement: Address) => {
+    setInputSettlement(settlement.MainDescription)
+    setSettlements([])
+    console.log(settlement)
   }
 
   return (
@@ -47,6 +56,7 @@ const WarehouseList: React.FC = () => {
               <li
                 key={settlement.Ref}
                 className='warehouseList__address'
+                onClick={() => { handleAddressClickChange(settlement) }}
               >
                 {settlement.Present}
               </li>
