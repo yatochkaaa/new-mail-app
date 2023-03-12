@@ -8,6 +8,7 @@ import {
   Paper
 } from '@mui/material'
 import { type Warehouse } from '../types/novapochta'
+import { WarehouseHeader } from '../types/warehousesTable'
 
 interface Props {
   warehouses: Warehouse[]
@@ -27,15 +28,16 @@ const WarehousesTable: React.FC<Props> = ({ warehouses }: Props) => {
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow>
-              <TableCell>Відділення / Поштомат</TableCell>
-              <TableCell>Адреса</TableCell>
-              <TableCell>Графік роботи</TableCell>
-              <TableCell>Вага до</TableCell>
+              {Object.values(WarehouseHeader).map(header => (
+                <TableCell key={header}>
+                  {header}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {warehouses.map(warehouse => (
-              <TableRow key={warehouse.Ref}>
+              <TableRow key={warehouse.Number}>
                 <TableCell>
                   {getPostOfficeType(warehouse.Description, warehouse.Number)}
                 </TableCell>
