@@ -1,13 +1,15 @@
 import React from 'react'
 import { searchSettlementsRequest } from '../api/novaposhta/settlements'
+import { getWarehousesRequest } from '../api/novaposhta/warehouses'
 import { type Address } from '../types/novapochta'
 import WarehousesTable from './WarehousesTable'
-
-// import { getWarehousesRequest } from '../api/novaposhta/warehouses'
 
 const WarehouseList: React.FC = () => {
   const [settlements, setSettlements] = React.useState<Address[]>([])
   const [inputSettlement, setInputSettlement] = React.useState('')
+  const [warehouses, setWarehouses] = React.useState([])
+  const [showWarehouses, setShowWarehouses] = React.useState<boolean>(false)
+  const [currentPage, setCurrentPage] = React.useState<number>(1)
 
   React.useEffect(() => {
     getSettlements(inputSettlement)
@@ -15,6 +17,8 @@ const WarehouseList: React.FC = () => {
     if (inputSettlement.length === 0) {
       setSettlements([])
     }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSettlement])
 
   const getSettlements = async (cityName: string) => {
@@ -29,11 +33,13 @@ const WarehouseList: React.FC = () => {
     console.log('settlements', addresses)
   }
 
-  // const getWarehouses = async () => {
-  //   const warehouses = await getWarehousesRequest()
+  const getWarehouses = async () => {
+    const warehouses = await getWarehousesRequest(inputSettlement, currentPage.toString())
+    setShowWarehouses(true)
+    setWarehouses(warehouses.data)
 
-  //   console.log('warehouses', warehouses)
-  // }
+    console.log('warehouses', warehouses.data)
+  }
 
   const handleInputSettlementChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -72,9 +78,15 @@ const WarehouseList: React.FC = () => {
           </ul>
           )}
         </div>
+
+        <button
+          onClick={getWarehouses}
+        >
+          Пошук
+        </button>
       </div>
 
-      <WarehousesTable />
+      <WarehousesTable warehouses={warehouses} />
     </div>
   )
 }
