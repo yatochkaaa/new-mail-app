@@ -1,6 +1,8 @@
 import React from 'react'
 import { searchSettlementsRequest } from '../api/novaposhta/settlements'
 import { type Address } from '../types/novapochta'
+import WarehousesTable from './WarehousesTable'
+
 // import { getWarehousesRequest } from '../api/novaposhta/warehouses'
 
 const WarehouseList: React.FC = () => {
@@ -9,6 +11,10 @@ const WarehouseList: React.FC = () => {
 
   React.useEffect(() => {
     getSettlements(inputSettlement)
+
+    if (inputSettlement.length === 0) {
+      setSettlements([])
+    }
   }, [inputSettlement])
 
   const getSettlements = async (cityName: string) => {
@@ -19,6 +25,7 @@ const WarehouseList: React.FC = () => {
     if (firstAdress !== inputSettlement) {
       setSettlements(addresses)
     }
+
     console.log('settlements', addresses)
   }
 
@@ -43,14 +50,15 @@ const WarehouseList: React.FC = () => {
   return (
     <div className="warehouseList">
       <div className='warehouseList__form'>
-        <div className='warehouseList__pointer'></div>
-        <input
-          className='warehouseList__settlement'
-          type="text"
-          value={inputSettlement}
-          onChange={handleInputSettlementChange}
-        />
-        {settlements.length > 0 && (
+        <div className='warehouseList__input'>
+          <div className='warehouseList__pointer'></div>
+          <input
+            className='warehouseList__settlement'
+            type="text"
+            value={inputSettlement}
+            onChange={handleInputSettlementChange}
+          />
+          {settlements.length > 0 && (
           <ul className='warehouseList__addresses'>
             {settlements.map(settlement => (
               <li
@@ -62,11 +70,11 @@ const WarehouseList: React.FC = () => {
               </li>
             ))}
           </ul>
-        )}
+          )}
+        </div>
       </div>
-      <ul>
 
-      </ul>
+      <WarehousesTable />
     </div>
   )
 }
