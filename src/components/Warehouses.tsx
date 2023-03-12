@@ -22,19 +22,16 @@ const WarehouseList: React.FC = () => {
   React.useEffect(() => {
     if (fetching) {
       updateWarehouses()
-      console.log(warehouses)
     }
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetching])
 
   React.useEffect(() => {
-    getSettlements(inputSettlement)
-
     if (inputSettlement.length === 0) {
       setSettlements([])
+    } else {
+      getSettlements(inputSettlement)
     }
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSettlement])
 
@@ -48,11 +45,14 @@ const WarehouseList: React.FC = () => {
 
   const getSettlements = async (cityName: string) => {
     const settlements = await searchSettlementsRequest(cityName)
-    const addresses = settlements.data[0].Addresses
-    const firstAdress = addresses[0].MainDescription
 
-    if (firstAdress !== inputSettlement) {
-      setSettlements(addresses)
+    if (settlements.data.length > 0 && settlements.data[0].Addresses.length > 0) {
+      const addresses = settlements.data[0].Addresses
+      const firstAdress = addresses[0].MainDescription
+
+      if (firstAdress !== inputSettlement) {
+        setSettlements(addresses)
+      }
     }
   }
 
