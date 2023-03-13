@@ -4,6 +4,7 @@
     width: $main-content-width;
     align-items: center;
     margin-bottom: $desktop-space;
+    position: relative;
 
     @include onTablet {
       width: 100%;
@@ -31,6 +32,21 @@
     height: 48px;
     width: 212px;
     @extend %pageButtonStyles;
+  }
+
+  &__formError {
+    font-size: 12px;
+    position: absolute;
+    height: $error-height;
+    padding: 8px;
+    background: $error-background;
+    color: $error-color;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: -$error-height;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 
   &__data {

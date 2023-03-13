@@ -9,6 +9,7 @@ const Track: React.FC = () => {
   const [warehouseRecipient, setWarehouseRecipient] = React.useState<string>('')
   const [status, setStatus] = React.useState<string>('')
   const [history, setHistory] = React.useState<string[]>([])
+  const [showInputError, setShowInputError] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     const savedHistory = localStorage.getItem('history')
@@ -30,22 +31,26 @@ const Track: React.FC = () => {
   }
 
   const getStatus = async (TTN: string) => {
+    const TTNCode = '204003'
     setWarehouseSender('')
     setWarehouseRecipient('')
     setStatus('')
-    const status = await getTrackingRequest(TTN)
-    const statusData = status.data[0]
+    if (TTNCode === TTN.substring(0, TTNCode.length) && TTN.length === 14) {
+      setShowInputError(false)
+      const status = await getTrackingRequest(TTN)
+      const statusData = status.data[0]
 
-    if (status.success) {
-      setWarehouseSender(statusData.WarehouseSender)
-      setWarehouseRecipient(statusData.WarehouseRecipient)
-      setStatus(statusData.Status)
-      if (history.length > 10) {
-        history.shift()
-        setHistory([...history, TTN])
-      } else {
+      if (status.success) {
+        setWarehouseSender(statusData.WarehouseSender)
+        setWarehouseRecipient(statusData.WarehouseRecipient)
+        setStatus(statusData.Status)
+        if (history.length > 10) {
+          history.shift()
+        }
         setHistory([...history, TTN])
       }
+    } else {
+      setShowInputError(true)
     }
     // 20400317061470
   }
@@ -63,6 +68,7 @@ const Track: React.FC = () => {
         TTN={TTN}
         handleInputChange={handleInputChange}
         getStatus={getStatus}
+        showInputError={showInputError}
       />
 
       <TrackData
