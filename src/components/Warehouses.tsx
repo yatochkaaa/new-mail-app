@@ -23,6 +23,7 @@ const WarehouseList: React.FC = () => {
     if (fetching) {
       updateWarehouses()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetching])
 
   React.useEffect(() => {
@@ -31,6 +32,7 @@ const WarehouseList: React.FC = () => {
     } else {
       setSettlements([])
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSettlement])
 
   const updateWarehouses = async () => {
