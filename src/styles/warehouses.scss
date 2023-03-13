@@ -1,4 +1,4 @@
-.warehouseList {
+.warehouses {
   border: $border;
 
   &__settlement {
@@ -6,6 +6,9 @@
   }
 
   &__form {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
     background: $interface-background;
     box-sizing: border-box;
     width: 100%;
@@ -16,7 +19,7 @@
     position: relative;
     padding: 0px 8px 0px 36px;
     background-color: #fff;
-    max-width: 350px;
+    width: 350px;
   }
 
   &__pointer {
@@ -57,6 +60,19 @@
       cursor: pointer;
       background: $background-hover;
     }
+  }
 
+  &__searchButton {
+    width: 200px;
+    font-size: 18px;
+    @extend %pageButtonStyles;
+
+    @include onTablet {
+      width: 80px;
+    }
+
+    @include onPhone {
+      font-size: 14px;
+    }
   }
 }

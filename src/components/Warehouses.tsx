@@ -10,6 +10,7 @@ const WarehouseList: React.FC = () => {
   const [warehouses, setWarehouses] = React.useState<Warehouse[]>([])
   const [currentPage, setCurrentPage] = React.useState<number>(1)
   const [fetching, setFetching] = React.useState<boolean>(false)
+  const [totalCount, setTotalCount] = React.useState<number>(0)
 
   React.useEffect(() => {
     document.addEventListener('scroll', handleScrollChange)
@@ -23,23 +24,21 @@ const WarehouseList: React.FC = () => {
     if (fetching) {
       updateWarehouses()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetching])
 
   React.useEffect(() => {
-    if (inputSettlement.length === 0) {
-      setSettlements([])
-    } else {
+    if (inputSettlement.length > 0) {
       getSettlements(inputSettlement)
+    } else {
+      setSettlements([])
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSettlement])
 
   const updateWarehouses = async () => {
-    const { data } = await getWarehousesRequest(inputSettlement, currentPage.toString())
-
-    setWarehouses([...warehouses, ...data])
+    const warehousesFromServer = await getWarehousesRequest(inputSettlement, currentPage.toString())
+    setWarehouses([...warehouses, ...warehousesFromServer.data])
     setCurrentPage(prevState => prevState + 1)
+    setTotalCount(warehousesFromServer.info.totalCount)
     setFetching(false)
   }
 
@@ -56,7 +55,7 @@ const WarehouseList: React.FC = () => {
     }
   }
 
-  const getWarehouses = async () => {
+  const getWarehouses = () => {
     setCurrentPage(1)
     setWarehouses([])
     setFetching(true)
@@ -78,28 +77,32 @@ const WarehouseList: React.FC = () => {
     const scrollTop = e.target.documentElement.scrollTop
     const innerHeight = window.innerHeight
 
-    if (scrollHeight - (Number(scrollTop) + innerHeight) < 100) {
+    if (
+      scrollHeight - (Number(scrollTop) + innerHeight) < 100 &&
+      warehouses.length < totalCount
+    ) {
       setFetching(true)
     }
   }
 
   return (
-    <div className="warehouseList">
-      <div className='warehouseList__form'>
-        <div className='warehouseList__input'>
-          <div className='warehouseList__pointer'></div>
+    <div className='warehouses'>
+      <div className='warehouses__form'>
+        <div className='warehouses__input'>
+          <div className='warehouses__pointer'></div>
           <input
-            className='warehouseList__settlement'
+            className='warehouses__settlement'
             type="text"
             value={inputSettlement}
             onChange={handleInputSettlementChange}
+            placeholder='Вкажіть населений пункт'
           />
           {settlements.length > 0 && (
-          <ul className='warehouseList__addresses'>
+          <ul className='warehouses__addresses'>
             {settlements.map(settlement => (
               <li
                 key={settlement.Ref}
-                className='warehouseList__address'
+                className='warehouses__address'
                 onClick={() => { handleAddressClickChange(settlement) }}
               >
                 {settlement.Present}
@@ -110,6 +113,7 @@ const WarehouseList: React.FC = () => {
         </div>
 
         <button
+          className='warehouses__searchButton'
           onClick={getWarehouses}
         >
           Пошук

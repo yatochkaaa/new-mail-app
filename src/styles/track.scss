@@ -1,7 +1,7 @@
 .track {
   &__form {
-    width: $main-content-width;
     display: flex;
+    width: $main-content-width;
     align-items: center;
     margin-bottom: $desktop-space;
 
@@ -30,7 +30,7 @@
     font-size: 18px;
     height: 48px;
     width: 212px;
-    @extend %buttonStyles;
+    @extend %pageButtonStyles;
   }
 
   &__data {
