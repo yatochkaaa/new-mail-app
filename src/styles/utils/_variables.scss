@@ -1,9 +1,12 @@
 $font-color: #33332f;
 $list-color: #515151;
 $button-color: #999997;
+$addition-button-color: #828282;
 $white: #fff;
 $black: #000;
 $red: #eb432e;
+$error-color: #ff3b30;
+$error-background: #fbeae8;
 $interface-background: #f2f2f2;
 $button-background: #fbfbfb;
 $background-hover: #fafafa;
@@ -13,6 +16,7 @@ $transition: all 300ms linear;
 
 $main-content-width: 600px;
 $sidebar-width: calc($main-content-width / 3);
+$error-height: 32px;
 
 $desktop-space: 36px;
 $tablet-space: 24px;

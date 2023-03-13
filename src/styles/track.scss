@@ -4,6 +4,7 @@
     width: $main-content-width;
     align-items: center;
     margin-bottom: $desktop-space;
+    position: relative;
 
     @include onTablet {
       width: 100%;
@@ -33,6 +34,21 @@
     @extend %pageButtonStyles;
   }
 
+  &__formError {
+    font-size: 12px;
+    position: absolute;
+    height: $error-height;
+    padding: 8px;
+    background: $error-background;
+    color: $error-color;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: -$error-height;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
   &__data {
     display: flex;
 
@@ -60,7 +76,7 @@
     @include onMediumDesktop {
       max-width: $main-content-width;
       min-width: inherit;
-      width: fit-content;
+      width: 100%;
       margin-right: 0;
       margin-bottom: $desktop-space;
     }
@@ -98,5 +114,24 @@
     display: block;
     font-weight: bold;
     margin-bottom: 8px;
+  }
+
+  &__historyList {
+    margin-bottom: $tablet-space;
+  }
+
+  &__historyItem {
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      color: $red;
+    }
+  }
+
+  &__clearHistoryButton {
+    color: $addition-button-color;
+    background-color: $white;
+    cursor: pointer;
   }
 }

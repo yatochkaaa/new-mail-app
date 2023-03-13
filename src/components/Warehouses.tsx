@@ -10,7 +10,6 @@ const WarehouseList: React.FC = () => {
   const [warehouses, setWarehouses] = React.useState<Warehouse[]>([])
   const [currentPage, setCurrentPage] = React.useState<number>(1)
   const [fetching, setFetching] = React.useState<boolean>(false)
-  const [totalCount, setTotalCount] = React.useState<number>(0)
 
   React.useEffect(() => {
     document.addEventListener('scroll', handleScrollChange)
@@ -24,6 +23,7 @@ const WarehouseList: React.FC = () => {
     if (fetching) {
       updateWarehouses()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetching])
 
   React.useEffect(() => {
@@ -32,13 +32,13 @@ const WarehouseList: React.FC = () => {
     } else {
       setSettlements([])
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSettlement])
 
   const updateWarehouses = async () => {
-    const warehousesFromServer = await getWarehousesRequest(inputSettlement, currentPage.toString())
-    setWarehouses([...warehouses, ...warehousesFromServer.data])
+    const { data } = await getWarehousesRequest(inputSettlement, currentPage.toString())
+    setWarehouses([...warehouses, ...data])
     setCurrentPage(prevState => prevState + 1)
-    setTotalCount(warehousesFromServer.info.totalCount)
     setFetching(false)
   }
 
@@ -77,10 +77,7 @@ const WarehouseList: React.FC = () => {
     const scrollTop = e.target.documentElement.scrollTop
     const innerHeight = window.innerHeight
 
-    if (
-      scrollHeight - (Number(scrollTop) + innerHeight) < 100 &&
-      warehouses.length < totalCount
-    ) {
+    if (scrollHeight - (Number(scrollTop) + innerHeight) < 100) {
       setFetching(true)
     }
   }
