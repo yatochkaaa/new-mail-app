@@ -11,6 +11,19 @@ const Track: React.FC = () => {
   const [history, setHistory] = React.useState<string[]>([])
   const [isStatusData, setIsStatusData] = React.useState<boolean>(false)
 
+  React.useEffect(() => {
+    const savedHistory = localStorage.getItem('history')
+
+    if (savedHistory) {
+      const parsedSavedHistory = JSON.parse(savedHistory)
+      setHistory(parsedSavedHistory)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    localStorage.setItem('history', JSON.stringify(history))
+  }, [history])
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
 
@@ -39,7 +52,7 @@ const Track: React.FC = () => {
         getStatus={getStatus}
       />
 
-      {isStatusData && (
+      {(isStatusData || history.length) > 0 && (
         <TrackData
           warehouseSender={warehouseSender}
           warehouseRecipient={warehouseRecipient}

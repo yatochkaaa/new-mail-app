@@ -60,7 +60,7 @@
     @include onMediumDesktop {
       max-width: $main-content-width;
       min-width: inherit;
-      width: fit-content;
+      width: 100%;
       margin-right: 0;
       margin-bottom: $desktop-space;
     }
