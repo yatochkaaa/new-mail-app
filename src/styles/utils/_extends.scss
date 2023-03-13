@@ -1,7 +1,14 @@
-%buttonStyles {
+%navigationButtonStyles {
   background-color: $button-background;
-    color: $button-color;
-    border-radius: 2px;
-    border: $border;
-    font-weight: bold;
+  color: $button-color;
+  border-radius: 2px;
+  border: $border;
+  font-weight: bold;
+}
+
+%pageButtonStyles {
+  background-color: $red;
+  color: $white;
+  border-radius: 2px;
+  font-weight: bold;
 }

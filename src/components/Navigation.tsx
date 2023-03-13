@@ -9,17 +9,15 @@ const Navigation: React.FC<Props> = ({
 }: Props) => {
   return (
     <nav className='navigation'>
-      {Object.values(NavigationItem).map(navItem => {
-        return (
-          <button
-            key={navItem}
-            className="navigation__item"
-            onClick={() => { setNavigation(navItem) }}
-          >
-            {navItem}
-          </button>
-        )
-      })}
+      {Object.values(NavigationItem).map(navItem => (
+        <button
+          key={navItem}
+          className="navigation__item"
+          onClick={() => { setNavigation(navItem) }}
+        >
+          {navItem}
+        </button>
+      ))}
     </nav>
   )
 }

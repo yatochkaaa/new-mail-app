@@ -1,5 +1,5 @@
 import React from 'react'
-import getTrackingRequest from '../api/tracking'
+import { getTrackingRequest } from '../api/novaposhta/tracking'
 import TrackData from './TrackData'
 import TrackForm from './TrackForm'
 

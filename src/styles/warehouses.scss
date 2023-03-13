@@ -1,0 +1,78 @@
+.warehouses {
+  border: $border;
+
+  &__settlement {
+    width: 100%;
+  }
+
+  &__form {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    background: $interface-background;
+    box-sizing: border-box;
+    width: 100%;
+    border: $border;
+  }
+
+  &__input {
+    position: relative;
+    padding: 0px 8px 0px 36px;
+    background-color: #fff;
+    width: 350px;
+  }
+
+  &__pointer {
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url(../imgs/o_wh_pointer.png) 50% 50% no-repeat;
+    position: absolute;
+    top: 2px;
+    left: 4px;
+  }
+
+  &__settlement {
+    border: 0;
+    padding: 8px 0;
+  }
+
+  &__addresses {
+    background-color: $white;
+    width: 100%;
+    border: $border;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  &__address {
+    font-size: 14px;
+    padding: 4px 8px;
+    transition: $transition;
+    color: $list-color;
+
+    &:not(:last-child) {
+      border-bottom: $border;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: $background-hover;
+    }
+  }
+
+  &__searchButton {
+    width: 200px;
+    font-size: 18px;
+    @extend %pageButtonStyles;
+
+    @include onTablet {
+      width: 80px;
+    }
+
+    @include onPhone {
+      font-size: 14px;
+    }
+  }
+}
