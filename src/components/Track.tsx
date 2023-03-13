@@ -9,7 +9,6 @@ const Track: React.FC = () => {
   const [warehouseRecipient, setWarehouseRecipient] = React.useState<string>('')
   const [status, setStatus] = React.useState<string>('')
   const [history, setHistory] = React.useState<string[]>([])
-  const [isStatusData, setIsStatusData] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     const savedHistory = localStorage.getItem('history')
@@ -39,9 +38,15 @@ const Track: React.FC = () => {
       setWarehouseRecipient(statusData.WarehouseRecipient)
       setStatus(statusData.Status)
       setHistory([...history, TTN])
-      setIsStatusData(status.success)
     }
     // 20400317061470
+  }
+
+  const clearHistory = () => {
+    setWarehouseSender('')
+    setWarehouseRecipient('')
+    setStatus('')
+    setHistory([])
   }
 
   return (
@@ -52,14 +57,13 @@ const Track: React.FC = () => {
         getStatus={getStatus}
       />
 
-      {(isStatusData || history.length) > 0 && (
-        <TrackData
-          warehouseSender={warehouseSender}
-          warehouseRecipient={warehouseRecipient}
-          status={status}
-          history={history}
-        />
-      )}
+      <TrackData
+        warehouseSender={warehouseSender}
+        warehouseRecipient={warehouseRecipient}
+        status={status}
+        history={history}
+        clearHistory={clearHistory}
+      />
     </div>
   )
 }
