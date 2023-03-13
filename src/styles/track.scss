@@ -104,6 +104,15 @@
     margin-bottom: $tablet-space;
   }
 
+  &__historyItem {
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      color: $red;
+    }
+  }
+
   &__clearHistoryButton {
     color: $addition-button-color;
     background-color: $white;

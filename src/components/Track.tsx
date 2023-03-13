@@ -30,6 +30,9 @@ const Track: React.FC = () => {
   }
 
   const getStatus = async (TTN: string) => {
+    setWarehouseSender('')
+    setWarehouseRecipient('')
+    setStatus('')
     const status = await getTrackingRequest(TTN)
     const statusData = status.data[0]
 
@@ -37,7 +40,12 @@ const Track: React.FC = () => {
       setWarehouseSender(statusData.WarehouseSender)
       setWarehouseRecipient(statusData.WarehouseRecipient)
       setStatus(statusData.Status)
-      setHistory([...history, TTN])
+      if (history.length > 10) {
+        history.shift()
+        setHistory([...history, TTN])
+      } else {
+        setHistory([...history, TTN])
+      }
     }
     // 20400317061470
   }
@@ -63,6 +71,8 @@ const Track: React.FC = () => {
         status={status}
         history={history}
         clearHistory={clearHistory}
+        setTTN={setTTN}
+        getStatus={getStatus}
       />
     </div>
   )

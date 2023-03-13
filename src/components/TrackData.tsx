@@ -4,6 +4,8 @@ interface Props {
   status: string
   history: string[]
   clearHistory: () => void
+  setTTN: React.Dispatch<React.SetStateAction<string>>
+  getStatus: (TTN: string) => void
 }
 
 const TrackData: React.FC<Props> = ({
@@ -11,12 +13,14 @@ const TrackData: React.FC<Props> = ({
   warehouseRecipient,
   status,
   history,
-  clearHistory
+  clearHistory,
+  setTTN,
+  getStatus
 }: Props) => {
   return (
     <div className="track__data">
         <div className='track__status'>
-          {history.length === 0
+          {status.length === 0 && warehouseSender.length === 0 && warehouseRecipient.length === 0
             ? <p>Введіть номер ТТН для отримання даних</p>
             : (
               <>
@@ -40,7 +44,18 @@ const TrackData: React.FC<Props> = ({
           <div className='track__history'>
             <span className="track__historyTitle">Історія:</span>
             <ul className='track__historyList'>
-              {history.map((TTN, i) => <li key={i}>{TTN}</li>)}
+              {history.map((TTN, i) => (
+                <li
+                  className='track__historyItem'
+                  key={i}
+                  onClick={() => {
+                    getStatus(TTN)
+                    setTTN(TTN)
+                  }}
+                >
+                  {TTN}
+                </li>
+              ))}
             </ul>
 
             <button
