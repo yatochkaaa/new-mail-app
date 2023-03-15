@@ -92,38 +92,7 @@ export enum WarehouseHeader {
 export interface WarehousesState {
   warehouses: Warehouse[]
   limit: number
+  page: number
   isLoading: boolean
   error: string | null
 }
-
-export enum WarehousesActionTypes {
-  GET_WAREHOUSES = 'GET_WAREHOUSES',
-  GET_WAREHOUSES_SUCCESS = 'GET_WAREHOUSES_SUCCESS',
-  GET_WAREHOUSES_ERROR = 'GET_WAREHOUSES_ERROR',
-  SET_WAREHOUSES_PAGE = 'SET_WAREHOUSES_PAGE',
-}
-
-interface GetWarehousesAction {
-  type: WarehousesActionTypes.GET_WAREHOUSES
-}
-
-interface GetWarehousesSuccessAction {
-  type: WarehousesActionTypes.GET_WAREHOUSES_SUCCESS
-  payload: Warehouse[]
-}
-
-interface GetWarehousesErrorAction {
-  type: WarehousesActionTypes.GET_WAREHOUSES_ERROR
-  payload: string
-}
-
-interface SetWarehousesTodoPageAction {
-  type: WarehousesActionTypes.SET_WAREHOUSES_PAGE
-  payload: number
-}
-
-export type WarehousesAction =
-  GetWarehousesAction
-  | GetWarehousesSuccessAction
-  | GetWarehousesErrorAction
-  | SetWarehousesTodoPageAction

@@ -2,16 +2,16 @@ import React from 'react'
 import { searchSettlementsRequest } from '../api/novaposhta/settlements'
 import { type Address } from '../types/novapochta'
 import WarehousesTable from './WarehousesTable'
-import { useAppDispatch, useAppSelector } from '../store/hooks/redux'
-import { getWarehousesAction } from '../store/action-creators/warehouses'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { getMoreWarehousesAction, getWarehousesAction } from '../store/action-creators/warehouses'
 
 const WarehouseList: React.FC = () => {
   const dispatch = useAppDispatch()
-  const { warehouses, isLoading } = useAppSelector(state => state.warehousesReducer)
+  const { warehouses, page, isLoading } = useAppSelector(state => state.warehousesReducer)
 
   const [settlements, setSettlements] = React.useState<Address[]>([])
   const [inputSettlement, setInputSettlement] = React.useState<string>('')
-  const [currentPage, setCurrentPage] = React.useState<number>(1)
+  // const [currentPage, setCurrentPage] = React.useState<number>(1)
   const [fetching, setFetching] = React.useState<boolean>(false)
 
   React.useEffect(() => {
@@ -24,15 +24,13 @@ const WarehouseList: React.FC = () => {
   }, [])
 
   const updateWarehouses = () => {
-    setCurrentPage(prevState => prevState + 1)
-
     const payload = {
       settlement: inputSettlement,
-      page: currentPage + 1,
+      page,
       prevWarehouses: warehouses
     }
 
-    dispatch(getWarehousesAction(payload))
+    dispatch(getMoreWarehousesAction(payload))
     setFetching(false)
   }
 
@@ -66,13 +64,7 @@ const WarehouseList: React.FC = () => {
   }, [inputSettlement])
 
   const getWarehouses = () => {
-    setCurrentPage(1)
-    const payload = {
-      settlement: inputSettlement,
-      page: 1,
-      prevWarehouses: []
-    }
-    dispatch(getWarehousesAction(payload))
+    dispatch(getWarehousesAction(inputSettlement))
   }
 
   const handleInputSettlementChange = (e: React.ChangeEvent<HTMLInputElement>) => {
