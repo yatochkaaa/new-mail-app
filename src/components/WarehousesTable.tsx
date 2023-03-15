@@ -11,9 +11,10 @@ import { type Warehouse, WarehouseHeader } from '../types/warehouses'
 
 interface Props {
   warehouses: Warehouse[]
+  isLoading: boolean
 }
 
-const WarehousesTable: React.FC<Props> = ({ warehouses }: Props) => {
+const WarehousesTable: React.FC<Props> = ({ warehouses, isLoading }: Props) => {
   const getPostOfficeType = (description: string, postNumber: string) => {
     if (description.includes('Поштомат')) {
       return `П-т ${postNumber}`
@@ -54,6 +55,7 @@ const WarehousesTable: React.FC<Props> = ({ warehouses }: Props) => {
                 </TableCell>
               </TableRow>
             ))}
+            {isLoading && <TableRow><TableCell>Loading...</TableCell></TableRow>}
           </TableBody>
         </Table>
       </TableContainer>

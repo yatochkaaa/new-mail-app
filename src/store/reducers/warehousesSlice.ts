@@ -5,7 +5,6 @@ import { getWarehousesAction } from '../action-creators/warehouses'
 const initialState: WarehousesState = {
   warehouses: [],
   limit: 30,
-  lastPage: 1,
   isLoading: false,
   error: null
 }

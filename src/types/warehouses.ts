@@ -92,7 +92,6 @@ export enum WarehouseHeader {
 export interface WarehousesState {
   warehouses: Warehouse[]
   limit: number
-  lastPage: number
   isLoading: boolean
   error: string | null
 }

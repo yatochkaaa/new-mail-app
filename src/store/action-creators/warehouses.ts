@@ -1,9 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { getWarehousesRequest } from '../../api/novaposhta/warehouses'
+import { type Warehouse } from '../../types/warehouses'
 
 interface Payload {
   settlement: string
   page: number
+  prevWarehouses: Warehouse[]
 }
 
 export const getWarehousesAction = createAsyncThunk(
@@ -11,12 +13,10 @@ export const getWarehousesAction = createAsyncThunk(
   async (payload: Payload, thunkAPI) => {
     try {
       const { data } = await getWarehousesRequest(payload.settlement, payload.page.toString())
-      return data
+
+      return [...payload.prevWarehouses, ...data]
     } catch (e) {
       return thunkAPI.rejectWithValue('Failed to load warehouses')
     }
   }
 )
-
-// export const setWarehousesPageAction = (page: number): WarehousesAction =>
-//   ({ type: WarehousesActionTypes.SET_WAREHOUSES_PAGE, payload: page })
