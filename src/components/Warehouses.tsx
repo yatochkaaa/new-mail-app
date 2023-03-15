@@ -1,13 +1,18 @@
 import React from 'react'
 import { searchSettlementsRequest } from '../api/novaposhta/settlements'
-import { getWarehousesRequest } from '../api/novaposhta/warehouses'
-import { type Warehouse, type Address } from '../types/novapochta'
+import { type Address } from '../types/novapochta'
+// import { type Warehouse } from '../types/warehouses'
 import WarehousesTable from './WarehousesTable'
+import { useActions } from '../store/hooks/useActions'
+import { useTypedSelector } from '../store/hooks/useTypeSelector'
 
 const WarehouseList: React.FC = () => {
+  const { warehouses } = useTypedSelector(state => state.warehouses)
+  const { getWarehousesAction, setWarehousesPageAction } = useActions()
+
   const [settlements, setSettlements] = React.useState<Address[]>([])
   const [inputSettlement, setInputSettlement] = React.useState<string>('')
-  const [warehouses, setWarehouses] = React.useState<Warehouse[]>([])
+  // const [warehouses, setWarehouses] = React.useState<Warehouse[]>([])
   const [currentPage, setCurrentPage] = React.useState<number>(1)
   const [fetching, setFetching] = React.useState<boolean>(false)
 
@@ -36,8 +41,7 @@ const WarehouseList: React.FC = () => {
   }, [inputSettlement])
 
   const updateWarehouses = async () => {
-    const { data } = await getWarehousesRequest(inputSettlement, currentPage.toString())
-    setWarehouses([...warehouses, ...data])
+    // setWarehouses([...warehouses, ...data])
     setCurrentPage(prevState => prevState + 1)
     setFetching(false)
   }
@@ -56,8 +60,9 @@ const WarehouseList: React.FC = () => {
   }
 
   const getWarehouses = () => {
+    getWarehousesAction(inputSettlement, currentPage)
     setCurrentPage(1)
-    setWarehouses([])
+    // setWarehouses([])
     setFetching(true)
   }
 
@@ -116,8 +121,11 @@ const WarehouseList: React.FC = () => {
           Пошук
         </button>
       </div>
-
-      <WarehousesTable warehouses={warehouses} />
+       {warehouses &&
+          <WarehousesTable
+            warehouses={warehouses}
+          />
+       }
     </div>
   )
 }
