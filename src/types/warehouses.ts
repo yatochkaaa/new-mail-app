@@ -93,7 +93,7 @@ export interface WarehousesState {
   warehouses: Warehouse[]
   limit: number
   lastPage: number
-  loading: boolean
+  isLoading: boolean
   error: string | null
 }
 

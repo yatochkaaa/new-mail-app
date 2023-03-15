@@ -3,12 +3,12 @@ import { searchSettlementsRequest } from '../api/novaposhta/settlements'
 import { type Address } from '../types/novapochta'
 // import { type Warehouse } from '../types/warehouses'
 import WarehousesTable from './WarehousesTable'
-import { useActions } from '../store/hooks/useActions'
-import { useTypedSelector } from '../store/hooks/useTypeSelector'
+import { useAppDispatch, useAppSelector } from '../store/hooks/redux'
+import { getWarehousesAction } from '../store/action-creators/warehouses'
 
 const WarehouseList: React.FC = () => {
-  const { warehouses } = useTypedSelector(state => state.warehouses)
-  const { getWarehousesAction, setWarehousesPageAction } = useActions()
+  const dispatch = useAppDispatch()
+  const { warehouses } = useAppSelector(state => state.warehousesReducer)
 
   const [settlements, setSettlements] = React.useState<Address[]>([])
   const [inputSettlement, setInputSettlement] = React.useState<string>('')
@@ -60,7 +60,12 @@ const WarehouseList: React.FC = () => {
   }
 
   const getWarehouses = () => {
-    getWarehousesAction(inputSettlement, currentPage)
+    const payload = {
+      settlement: inputSettlement,
+      page: currentPage
+    }
+
+    dispatch(getWarehousesAction(payload))
     setCurrentPage(1)
     // setWarehouses([])
     setFetching(true)
