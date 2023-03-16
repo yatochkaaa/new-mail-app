@@ -1,14 +1,16 @@
 import React from 'react'
 import { searchSettlementsRequest } from '../api/novaposhta/settlements'
-import { getWarehousesRequest } from '../api/novaposhta/warehouses'
-import { type Warehouse, type Address } from '../types/novapochta'
+import { type Address } from '../types/novapochta'
 import WarehousesTable from './WarehousesTable'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { getMoreWarehousesAction, getWarehousesAction } from '../store/action-creators/warehouses'
 
 const WarehouseList: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const { warehouses, page, isLoading } = useAppSelector(state => state.warehousesReducer)
+
   const [settlements, setSettlements] = React.useState<Address[]>([])
   const [inputSettlement, setInputSettlement] = React.useState<string>('')
-  const [warehouses, setWarehouses] = React.useState<Warehouse[]>([])
-  const [currentPage, setCurrentPage] = React.useState<number>(1)
   const [fetching, setFetching] = React.useState<boolean>(false)
 
   React.useEffect(() => {
@@ -17,7 +19,19 @@ const WarehouseList: React.FC = () => {
     return function () {
       document.removeEventListener('scroll', handleScrollChange)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const updateWarehouses = () => {
+    const payload = {
+      settlement: inputSettlement,
+      page,
+      prevWarehouses: warehouses
+    }
+
+    dispatch(getMoreWarehousesAction(payload))
+    setFetching(false)
+  }
 
   React.useEffect(() => {
     if (fetching) {
@@ -25,22 +39,6 @@ const WarehouseList: React.FC = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetching])
-
-  React.useEffect(() => {
-    if (inputSettlement.length > 0) {
-      getSettlements(inputSettlement)
-    } else {
-      setSettlements([])
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputSettlement])
-
-  const updateWarehouses = async () => {
-    const { data } = await getWarehousesRequest(inputSettlement, currentPage.toString())
-    setWarehouses([...warehouses, ...data])
-    setCurrentPage(prevState => prevState + 1)
-    setFetching(false)
-  }
 
   const getSettlements = async (cityName: string) => {
     const settlements = await searchSettlementsRequest(cityName)
@@ -55,15 +53,21 @@ const WarehouseList: React.FC = () => {
     }
   }
 
+  React.useEffect(() => {
+    if (inputSettlement.length > 0) {
+      getSettlements(inputSettlement)
+    } else {
+      setSettlements([])
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputSettlement])
+
   const getWarehouses = () => {
-    setCurrentPage(1)
-    setWarehouses([])
-    setFetching(true)
+    dispatch(getWarehousesAction(inputSettlement))
   }
 
   const handleInputSettlementChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
-
     setInputSettlement(value)
   }
 
@@ -72,12 +76,12 @@ const WarehouseList: React.FC = () => {
     setSettlements([])
   }
 
-  const handleScrollChange = (e: any) => {
-    const scrollHeight = e.target.documentElement.scrollHeight
-    const scrollTop = e.target.documentElement.scrollTop
+  const handleScrollChange = () => {
+    const scrollTop = document.documentElement.scrollTop
+    const offsetHeight = document.documentElement.offsetHeight
     const innerHeight = window.innerHeight
 
-    if (scrollHeight - (Number(scrollTop) + innerHeight) < 100) {
+    if (innerHeight + scrollTop === offsetHeight && !isLoading) {
       setFetching(true)
     }
   }
@@ -116,8 +120,12 @@ const WarehouseList: React.FC = () => {
           Пошук
         </button>
       </div>
-
-      <WarehousesTable warehouses={warehouses} />
+       {warehouses &&
+          <WarehousesTable
+            warehouses={warehouses}
+            isLoading={isLoading}
+          />
+       }
     </div>
   )
 }

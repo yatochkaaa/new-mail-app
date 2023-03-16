@@ -1,28 +1,31 @@
 import React from 'react'
-import { getTrackingRequest } from '../api/novaposhta/tracking'
+import { getTrackDataAction, getTrackHistoryAction, setTrackClearHistoryAction } from '../store/action-creators/tracking'
+import { store } from '../store'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
 import TrackData from './TrackData'
 import TrackForm from './TrackForm'
 
 const Track: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const { status, history } = useAppSelector(state => state.trackingReducer)
+
   const [TTN, setTTN] = React.useState<string>('')
-  const [warehouseSender, setWarehouseSender] = React.useState<string>('')
-  const [warehouseRecipient, setWarehouseRecipient] = React.useState<string>('')
-  const [status, setStatus] = React.useState<string>('')
-  const [history, setHistory] = React.useState<string[]>([])
   const [showInputError, setShowInputError] = React.useState<boolean>(false)
 
   React.useEffect(() => {
-    const savedHistory = localStorage.getItem('history')
+    const persistedState = localStorage.getItem('history')
 
-    if (savedHistory) {
-      const parsedSavedHistory = JSON.parse(savedHistory)
-      setHistory(parsedSavedHistory)
+    if (persistedState) {
+      const parsedHistory = JSON.parse(persistedState)
+      console.log(parsedHistory)
+      dispatch(getTrackHistoryAction(parsedHistory))
     }
-  }, [])
 
-  React.useEffect(() => {
-    localStorage.setItem('history', JSON.stringify(history))
-  }, [history])
+    store.subscribe(() => {
+      localStorage.setItem('history', JSON.stringify(store.getState().trackingReducer.history))
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -32,23 +35,9 @@ const Track: React.FC = () => {
 
   const getStatus = async (TTN: string) => {
     const TTNCode = '204003'
-    setWarehouseSender('')
-    setWarehouseRecipient('')
-    setStatus('')
     if (TTNCode === TTN.substring(0, TTNCode.length) && TTN.length === 14) {
       setShowInputError(false)
-      const status = await getTrackingRequest(TTN)
-      const statusData = status.data[0]
-
-      if (status.success) {
-        setWarehouseSender(statusData.WarehouseSender)
-        setWarehouseRecipient(statusData.WarehouseRecipient)
-        setStatus(statusData.Status)
-        if (history.length > 10) {
-          history.shift()
-        }
-        setHistory([...history, TTN])
-      }
+      dispatch(getTrackDataAction(TTN))
     } else {
       setShowInputError(true)
     }
@@ -56,10 +45,7 @@ const Track: React.FC = () => {
   }
 
   const clearHistory = () => {
-    setWarehouseSender('')
-    setWarehouseRecipient('')
-    setStatus('')
-    setHistory([])
+    dispatch(setTrackClearHistoryAction())
   }
 
   return (
@@ -71,15 +57,13 @@ const Track: React.FC = () => {
         showInputError={showInputError}
       />
 
-      <TrackData
-        warehouseSender={warehouseSender}
-        warehouseRecipient={warehouseRecipient}
-        status={status}
-        history={history}
-        clearHistory={clearHistory}
-        setTTN={setTTN}
-        getStatus={getStatus}
-      />
+        <TrackData
+          status={status}
+          history={history}
+          clearHistory={clearHistory}
+          setTTN={setTTN}
+          getStatus={getStatus}
+        />
     </div>
   )
 }

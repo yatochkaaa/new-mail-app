@@ -1,7 +1,7 @@
+import { type TrackStatus } from '../types/tracking'
+
 interface Props {
-  warehouseSender: string
-  warehouseRecipient: string
-  status: string
+  status: TrackStatus | null
   history: string[]
   clearHistory: () => void
   setTTN: React.Dispatch<React.SetStateAction<string>>
@@ -9,8 +9,6 @@ interface Props {
 }
 
 const TrackData: React.FC<Props> = ({
-  warehouseSender,
-  warehouseRecipient,
   status,
   history,
   clearHistory,
@@ -20,20 +18,20 @@ const TrackData: React.FC<Props> = ({
   return (
     <div className="track__data">
         <div className='track__status'>
-          {status.length === 0 && warehouseSender.length === 0 && warehouseRecipient.length === 0
+          {status === null
             ? <p>Введіть номер ТТН для отримання даних</p>
             : (
               <>
                 <p>
-                  Статус доставки: {status || 'Дані відсутні'}
+                  Статус доставки: {status.Status || 'Дані відсутні'}
                 </p>
                 <p>
                   <strong>Відправлено: </strong>
-                  {warehouseSender || 'Дані відсутні'}
+                  {status.WarehouseSender || 'Дані відсутні'}
                 </p>
                 <p>
                   <strong>Отримано: </strong>
-                  {warehouseRecipient || 'Дані відсутні'}
+                  {status.WarehouseRecipient || 'Дані відсутні'}
                 </p>
               </>
               )
