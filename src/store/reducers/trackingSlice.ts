@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { type TrackStatus } from '../../types/tracking'
-import { getTrackDataAction, setTrackClearHistoryAction } from '../action-creators/tracking'
+import { getTrackDataAction, getTrackHistoryAction, setTrackClearHistoryAction } from '../action-creators/tracking'
 
 interface TrackingState {
   status: TrackStatus | null
@@ -36,6 +36,13 @@ export const trackingSlice = createSlice({
     [getTrackDataAction.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false
       state.error = action.payload
+    },
+    [getTrackHistoryAction.fulfilled.type]: (state, action: PayloadAction<string[]>) => {
+      state.isLoading = false
+      state.history = action.payload
+    },
+    [getTrackHistoryAction.pending.type]: (state) => {
+      state.isLoading = true
     },
     [setTrackClearHistoryAction.fulfilled.type]: (state, action: PayloadAction<[]>) => {
       state.status = null

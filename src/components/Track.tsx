@@ -1,5 +1,6 @@
 import React from 'react'
-import { getTrackDataAction, setTrackClearHistoryAction } from '../store/action-creators/tracking'
+import { getTrackDataAction, getTrackHistoryAction, setTrackClearHistoryAction } from '../store/action-creators/tracking'
+import { store } from '../store'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import TrackData from './TrackData'
 import TrackForm from './TrackForm'
@@ -11,18 +12,20 @@ const Track: React.FC = () => {
   const [TTN, setTTN] = React.useState<string>('')
   const [showInputError, setShowInputError] = React.useState<boolean>(false)
 
-  // React.useEffect(() => {
-  //   const savedHistory = localStorage.getItem('history')
+  React.useEffect(() => {
+    const persistedState = localStorage.getItem('history')
 
-  //   if (savedHistory) {
-  //     const parsedSavedHistory = JSON.parse(savedHistory)
-  //     setHistory(parsedSavedHistory)
-  //   }
-  // }, [])
+    if (persistedState) {
+      const parsedHistory = JSON.parse(persistedState)
+      console.log(parsedHistory)
+      dispatch(getTrackHistoryAction(parsedHistory))
+    }
 
-  // React.useEffect(() => {
-  //   localStorage.setItem('history', JSON.stringify(history))
-  // }, [history])
+    store.subscribe(() => {
+      localStorage.setItem('history', JSON.stringify(store.getState().trackingReducer.history))
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target

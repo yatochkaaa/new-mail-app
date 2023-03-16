@@ -1,6 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import warehousesReducer from './reducers/warehousesSlice'
+import { rootReducer } from './reducers'
 
-const store = configureStore({ reducer: warehousesReducer })
+export const setupStore = () => {
+  return configureStore({
+    reducer: rootReducer
+  })
+}
 
-export default store
+export const store = setupStore()
+
+export type AppStore = ReturnType<typeof setupStore>
+export type AppDispatch = AppStore['dispatch']

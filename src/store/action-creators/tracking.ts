@@ -14,4 +14,11 @@ export const getTrackDataAction = createAsyncThunk(
   }
 )
 
+export const getTrackHistoryAction = createAsyncThunk(
+  'tracking/getHistory',
+  (history: string[]) => {
+    return history
+  }
+)
+
 export const setTrackClearHistoryAction = createAsyncThunk('tracking/clearHistory', () => [])
