@@ -1,7 +1,7 @@
 import React from 'react'
 import Navigation from './components/Navigation'
-import Track from './components/Track'
-import WarehouseList from './components/Warehouses'
+import Track from './components/Track/Track'
+import WarehouseList from './components/Warehouses/Warehouses'
 import { NavigationItem } from './types/navigation'
 import './styles/styles.scss'
 

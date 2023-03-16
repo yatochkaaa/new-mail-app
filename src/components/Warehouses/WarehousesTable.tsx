@@ -7,7 +7,8 @@ import {
   TableCell,
   Paper
 } from '@mui/material'
-import { type Warehouse, WarehouseHeader } from '../types/warehouses'
+import { type Warehouse } from '../../types/warehouses/warehouses'
+import { WarehouseHeader } from '../../types/warehouses/table'
 
 interface Props {
   warehouses: Warehouse[]

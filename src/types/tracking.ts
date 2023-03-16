@@ -1,4 +1,4 @@
-export interface TrackStatus {
+export interface TrackStatusType {
   ActualDeliveryDate: string
   AdditionalInformationEW: string
   AdjustedDate: string

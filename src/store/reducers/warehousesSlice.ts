@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { type Warehouse } from '../../types/warehouses'
+import { type Warehouse } from '../../types/warehouses/warehouses'
 import { getMoreWarehousesAction, getWarehousesAction } from '../action-creators/warehouses'
 
 export interface WarehousesState {

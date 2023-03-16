@@ -1,9 +1,10 @@
 import React from 'react'
-import { getTrackDataAction, getTrackHistoryAction, setTrackClearHistoryAction } from '../store/action-creators/tracking'
-import { store } from '../store'
-import { useAppDispatch, useAppSelector } from '../store/hooks'
-import TrackData from './TrackData'
+import { getTrackDataAction, getTrackHistoryAction, setTrackClearHistoryAction } from '../../store/action-creators/tracking'
+import { store } from '../../store'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import TrackForm from './TrackForm'
+import TrackStatus from './TrackStatus'
+import TrackHistory from './TrackHistory'
 
 const Track: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -17,7 +18,6 @@ const Track: React.FC = () => {
 
     if (persistedState) {
       const parsedHistory = JSON.parse(persistedState)
-      console.log(parsedHistory)
       dispatch(getTrackHistoryAction(parsedHistory))
     }
 
@@ -57,13 +57,17 @@ const Track: React.FC = () => {
         showInputError={showInputError}
       />
 
-        <TrackData
-          status={status}
-          history={history}
-          clearHistory={clearHistory}
-          setTTN={setTTN}
-          getStatus={getStatus}
-        />
+      <div className="track__data">
+        <TrackStatus status={status} />
+        {history.length > 0 && (
+          <TrackHistory
+            history={history}
+            clearHistory={clearHistory}
+            setTTN={setTTN}
+            getStatus={getStatus}
+          />
+        )}
+      </div>
     </div>
   )
 }
