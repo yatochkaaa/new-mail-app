@@ -1,6 +1,14 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { type WarehousesState, type Warehouse } from '../../types/warehouses'
+import { type Warehouse } from '../../types/warehouses'
 import { getMoreWarehousesAction, getWarehousesAction } from '../action-creators/warehouses'
+
+export interface WarehousesState {
+  warehouses: Warehouse[]
+  limit: number
+  page: number
+  isLoading: boolean
+  error: string | null
+}
 
 const initialState: WarehousesState = {
   warehouses: [],

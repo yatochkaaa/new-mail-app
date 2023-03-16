@@ -14,7 +14,6 @@ export const getWarehousesAction = createAsyncThunk(
     try {
       const page = '1'
       const { data } = await getWarehousesRequest(payload, page)
-      console.log(data)
 
       return data
     } catch (e) {

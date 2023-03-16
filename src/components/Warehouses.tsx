@@ -11,7 +11,6 @@ const WarehouseList: React.FC = () => {
 
   const [settlements, setSettlements] = React.useState<Address[]>([])
   const [inputSettlement, setInputSettlement] = React.useState<string>('')
-  // const [currentPage, setCurrentPage] = React.useState<number>(1)
   const [fetching, setFetching] = React.useState<boolean>(false)
 
   React.useEffect(() => {

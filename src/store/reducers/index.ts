@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 import warehousesReducer from './warehousesSlice'
+import trackingReducer from './trackingSlice'
 
 const rootReducer = combineReducers({
+  trackingReducer,
   warehousesReducer
 })
 

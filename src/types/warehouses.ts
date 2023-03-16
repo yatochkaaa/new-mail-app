@@ -88,11 +88,3 @@ export enum WarehouseHeader {
   scheduler = 'Графік роботи',
   weight = 'Вага до'
 }
-
-export interface WarehousesState {
-  warehouses: Warehouse[]
-  limit: number
-  page: number
-  isLoading: boolean
-  error: string | null
-}
