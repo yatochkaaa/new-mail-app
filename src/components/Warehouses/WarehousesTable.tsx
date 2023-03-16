@@ -5,7 +5,8 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Paper
+  Paper,
+  CircularProgress
 } from '@mui/material'
 import { type Warehouse } from '../../types/warehouses/warehouses'
 import { WarehouseHeader } from '../../types/warehouses/table'
@@ -25,12 +26,12 @@ const WarehousesTable: React.FC<Props> = ({ warehouses, isLoading }: Props) => {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer className='warehouses__table' component={Paper}>
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow>
               {Object.values(WarehouseHeader).map(header => (
-                <TableCell key={header}>
+                <TableCell style={{ fontWeight: 600 }} align='center' key={header}>
                   {header}
                 </TableCell>
               ))}
@@ -39,24 +40,29 @@ const WarehousesTable: React.FC<Props> = ({ warehouses, isLoading }: Props) => {
           <TableBody>
             {warehouses.map(warehouse => (
               <TableRow key={warehouse.Number}>
-                <TableCell>
+                <TableCell align='center'>
                   {getPostOfficeType(warehouse.Description, warehouse.Number)}
                 </TableCell>
 
-                <TableCell>
+                <TableCell align='center'>
                   {warehouse.ShortAddress}
                 </TableCell>
 
-                <TableCell>
+                <TableCell align='center'>
                   {warehouse.Schedule.Monday}
                 </TableCell>
 
-                <TableCell>
+                <TableCell align='center'>
                   {warehouse.TotalMaxWeightAllowed === '0' ? '1000' : warehouse.TotalMaxWeightAllowed}
                 </TableCell>
               </TableRow>
             ))}
-            {isLoading && <TableRow><TableCell>Loading...</TableCell></TableRow>}
+            {isLoading && (
+            <TableRow>
+              <TableCell colSpan={4} align='center'>
+                <CircularProgress />
+              </TableCell>
+            </TableRow>)}
           </TableBody>
         </Table>
       </TableContainer>
