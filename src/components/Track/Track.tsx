@@ -41,7 +41,6 @@ const Track: React.FC = () => {
     } else {
       setShowInputError(true)
     }
-    // 20400317061470
   }
 
   const clearHistory = () => {
