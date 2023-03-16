@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/new-mail-app/static/css/main.60a5a3e9.css",
-    "main.js": "/new-mail-app/static/js/main.01ed842e.js",
+    "main.css": "/new-mail-app/static/css/main.2b6f66b7.css",
+    "main.js": "/new-mail-app/static/js/main.e893724b.js",
     "static/media/NovaPoshta-Regular.bef8f88c.woff2": "/new-mail-app/static/media/NovaPoshta-Regular.bef8f88c.50028549dde3a3648ccd.woff2",
     "index.html": "/new-mail-app/index.html",
-    "main.60a5a3e9.css.map": "/new-mail-app/static/css/main.60a5a3e9.css.map",
-    "main.01ed842e.js.map": "/new-mail-app/static/js/main.01ed842e.js.map"
+    "main.2b6f66b7.css.map": "/new-mail-app/static/css/main.2b6f66b7.css.map",
+    "main.e893724b.js.map": "/new-mail-app/static/js/main.e893724b.js.map"
   },
   "entrypoints": [
-    "static/css/main.60a5a3e9.css",
-    "static/js/main.01ed842e.js"
+    "static/css/main.2b6f66b7.css",
+    "static/js/main.e893724b.js"
   ]
 }
