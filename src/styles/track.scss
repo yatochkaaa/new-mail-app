@@ -133,5 +133,10 @@
     color: $addition-button-color;
     background-color: $white;
     cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      color: $font-color;
+    }
   }
 }

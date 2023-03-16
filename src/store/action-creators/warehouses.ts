@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { getWarehousesRequest } from '../../api/novaposhta/warehouses'
-import { type Warehouse } from '../../types/warehouses'
+import { type Warehouse } from '../../types/warehouses/warehouses'
 
 interface PayloadMoreWarehouses {
   settlement: string

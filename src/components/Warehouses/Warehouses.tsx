@@ -1,9 +1,10 @@
 import React from 'react'
-import { searchSettlementsRequest } from '../api/novaposhta/settlements'
-import { type Address } from '../types/novapochta'
+import { searchSettlementsRequest } from '../../api/novaposhta/settlements'
+import { type Address } from '../../types/warehouses/warehouses'
 import WarehousesTable from './WarehousesTable'
-import { useAppDispatch, useAppSelector } from '../store/hooks'
-import { getMoreWarehousesAction, getWarehousesAction } from '../store/action-creators/warehouses'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { getMoreWarehousesAction, getWarehousesAction } from '../../store/action-creators/warehouses'
+import WarehousesForm from './WarehousesForm'
 
 const WarehouseList: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -45,9 +46,9 @@ const WarehouseList: React.FC = () => {
 
     if (settlements.data.length > 0 && settlements.data[0].Addresses.length > 0) {
       const addresses = settlements.data[0].Addresses
-      const firstAdress = addresses[0].MainDescription
+      const firstAddress = addresses[0].MainDescription
 
-      if (firstAdress !== inputSettlement) {
+      if (firstAddress !== inputSettlement) {
         setSettlements(addresses)
       }
     }
@@ -88,39 +89,14 @@ const WarehouseList: React.FC = () => {
 
   return (
     <div className='warehouses'>
-      <div className='warehouses__form'>
-        <div className='warehouses__input'>
-          <div className='warehouses__pointer'></div>
-          <input
-            className='warehouses__settlement'
-            type="text"
-            value={inputSettlement}
-            onChange={handleInputSettlementChange}
-            placeholder='Вкажіть населений пункт'
-          />
-          {settlements.length > 0 && (
-          <ul className='warehouses__addresses'>
-            {settlements.map(settlement => (
-              <li
-                key={settlement.Ref}
-                className='warehouses__address'
-                onClick={() => { handleAddressClickChange(settlement) }}
-              >
-                {settlement.Present}
-              </li>
-            ))}
-          </ul>
-          )}
-        </div>
-
-        <button
-          className='warehouses__searchButton'
-          onClick={getWarehouses}
-        >
-          Пошук
-        </button>
-      </div>
-       {warehouses &&
+      <WarehousesForm
+        inputSettlement={inputSettlement}
+        handleInputSettlementChange={handleInputSettlementChange}
+        settlements={settlements}
+        handleAddressClickChange={handleAddressClickChange}
+        getWarehouses={getWarehouses}
+      />
+       {warehouses.length > 0 &&
           <WarehousesTable
             warehouses={warehouses}
             isLoading={isLoading}

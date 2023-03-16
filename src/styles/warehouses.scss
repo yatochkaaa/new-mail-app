@@ -1,6 +1,4 @@
 .warehouses {
-  border: $border;
-
   &__settlement {
     width: 100%;
   }
@@ -73,6 +71,18 @@
 
     @include onPhone {
       font-size: 14px;
+    }
+  }
+
+  &__table {
+    margin-bottom: $desktop-space;
+
+    @include onTablet {
+      margin-bottom: $tablet-space;
+    }
+
+    @include onPhone {
+      margin-bottom: $phone-space;
     }
   }
 }
