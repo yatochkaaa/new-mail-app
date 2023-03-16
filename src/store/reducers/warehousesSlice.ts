@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { type Warehouse } from '../../types/warehouses/warehouses'
-import { getMoreWarehousesAction, getWarehousesAction } from '../action-creators/warehouses'
+import { clearWarehousesAction, getMoreWarehousesAction, getWarehousesAction } from '../action-creators/warehouses'
 
 export interface WarehousesState {
   warehouses: Warehouse[]
@@ -48,6 +48,15 @@ export const warehousesSlice = createSlice({
     [getMoreWarehousesAction.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false
       state.error = action.payload
+    },
+    [clearWarehousesAction.fulfilled.type]: (state, action: PayloadAction<[]>) => {
+      state.isLoading = false
+      state.error = null
+      state.page = 1
+      state.warehouses = action.payload
+    },
+    [clearWarehousesAction.pending.type]: (state) => {
+      state.isLoading = true
     }
   }
 })

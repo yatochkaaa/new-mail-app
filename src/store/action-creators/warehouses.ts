@@ -34,3 +34,5 @@ export const getMoreWarehousesAction = createAsyncThunk(
     }
   }
 )
+
+export const clearWarehousesAction = createAsyncThunk('warehouses/clearWarehouses', () => [])
