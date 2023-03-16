@@ -11,6 +11,7 @@ const App: React.FC = () => {
   return (
     <div className='app'>
       <Navigation
+        navigation={navigation}
         setNavigation={setNavigation}
       />
 

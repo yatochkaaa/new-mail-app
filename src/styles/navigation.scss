@@ -25,5 +25,10 @@
     &:hover {
       color: $red;
     }
+
+    &--active {
+      color: $red;
+      border-color: $red;
+    }
   }
 }
