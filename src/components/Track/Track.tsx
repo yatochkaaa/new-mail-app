@@ -34,8 +34,7 @@ const Track: React.FC = () => {
   }
 
   const getStatus = async (TTN: string) => {
-    const TTNCode = '204003'
-    if (TTNCode === TTN.substring(0, TTNCode.length) && TTN.length === 14) {
+    if (TTN.length === 14) {
       setShowInputError(false)
       dispatch(getTrackDataAction(TTN))
     } else {
